@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App - eEasy Tutorials</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="card">
+        <div class="search">
+        <input type="text" placeholder="enter city name" spellcheck="false" />
+        <button><img src="./images/search.png" alt="" /></button>
+        </div>
+        <div class="weather">
+        <img src="images/rain.png" class="weather-icon" alt="" />
+        <h1 class="temp">22°C</h1>
+        <h2 class="city">New York</h2>
+    <div class="details">
+        <div class="col">
+            <img src="images/humidity.png" alt="">
+            <div>
+            <p class="humidity">50%</p>
+            <p>Humidity</p>
+            </div>
+        </div>
+        <div class="col">
+            <img src="images/wind.png" alt="">
+            <div>
+            <p class="wind">15 km/h</p>
+            <p>Wind Speed</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+
+//         const apiKey = "bb6b6c7d9f864f57d100632aea45b9e3";
+//         const apiUrl = "https://api.openweathermap.org/data/2.5/weather?unit=metric&q=";
+//         const serchbox = document.querySelector(".search input");
+        const serchbtn = document.querySelector(".search button");
+
+//         async function checkWeather(city) {
+//             const response = await fetch(apiUrl + city + `&appid=${apiKey}`)
+//             var data = await response.json();
+//             console.log(data)
+//             console.log( data.main.humidity)
+//             document.querySelector(".city").innerHTML = data.name;
+//             document.querySelector(".temp").innerHTML = (data.main.temp - 32) * 5/9 +"°C";
+//             document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+//             document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+// ;
+//         }
+//         serchbtn.addEventListener("click" ,()=> {
+//           checkWeather(serchbox.value);
+//         })
+
+serchbtn.addEventListener("click", () => {
+  const apiKey = "bb6b6c7d9f864f57d100632aea45b9e3";
+  const city =  document.querySelector(".search input").value;
+
+  if(city =='')
+    return;
+    fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city}&appid=${apiKey}`).then(respons => respons.json()).then(json => {
+
+      const image = document.querySelector(".weather img")
+      const temp = document.querySelector(".temp")
+      const nameOfCity = document.querySelector(".city")
+      const humidity =  document.querySelector(".humidity")
+      const wind = document.querySelector(".wind")
+        switch (json.weather[0].main) {
+          case 'Clear':
+            image.src ='images/clear.png'
+            break;
+
+            case 'Rain':
+            image.src ='images/rain.png'
+            break;
+            case 'Snow':
+            image.src ='images/snow.png'
+            break;
+            case 'Clouds':
+            image.src ='images/cloud.png'
+            break;
+
+            case 'Mist':
+            image.src ='images/mist.png'
+            break;
+
+            case 'Haze':
+            image.src ='images/mist.png'
+            break;
+
+            default:
+              imge.src = 'images/cloud.png';
+        }
+
+        temp.innerHTML = `${parseInt(json.main.temp)}<span>°C</span>`
+        nameOfCity.innerHTML = `${json.name}`
+        humidity.innerHTML = `${json.main.humidity}%`
+        console.log(json)
+       wind.innerHTML = `${json.wind.speed}km/h`
+
+
+    })
+
+})
+
+
+
+
+    </script>
+  </body>
+</html>
